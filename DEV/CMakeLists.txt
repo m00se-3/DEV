@@ -1,5 +1,13 @@
 add_executable(dev)
 
+if(Clang-Tidy-Loc)
+    message("Clang Tidy found! Enabling...\n")
+    set_property(TARGET dev PROPERTY CXX_CLANG_TIDY ${Clang-Tidy-Loc})
+elseif(CPP-Check-Loc)
+    message("CPPCheck found! Enabling...\n")
+    set_property(TARGET dev PROPERTY CMAKE_CXX_CPPCHECK ${CPP-Check-Loc})
+endif()
+
 if(${CMAKE_CXX_COMPILER_ID} MATCHES MSVC)
 	include("../cmake/MSVCOptions.cmake")
 else()

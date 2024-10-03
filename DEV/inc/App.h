@@ -3,16 +3,15 @@
 
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace dev
 {
     class App
     {
-        public:
+    public:
         App();
 
-        private:
+    private:
         sf::RenderWindow _window;
         tgui::Gui _gui;
     };
