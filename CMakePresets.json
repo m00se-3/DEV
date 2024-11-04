@@ -1,10 +1,5 @@
 {
     "version": 6,
-    "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 25,
-        "patch": 0
-    },
     "configurePresets": [
         {
             "name": "base",
@@ -16,9 +11,7 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_C_COMPILER": "clang",
                 "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_CXX_STANDARD": "23",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/${presetName}/DEV"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
             },
             "environment": {
                 "CMAKE_BUILD_PARALLEL_LEVEL": "12"
