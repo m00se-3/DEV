@@ -1,0 +1,26 @@
+if(DEFINED CLANG_TIDY_EXE)
+    find_program(Clang-Tidy-Loc ${CLANG_TIDY_EXE})
+else()
+    find_program(Clang-Tidy-Loc clang-tidy)
+endif()
+
+if(DEFINED CPPCHECK_EXE)
+    find_program(CPP-Check-Loc ${CPPCHECK_EXE})
+else()
+    find_program(CPP-Check-Loc cppcheck)
+endif()
+
+if(DEFINED CCACHE_EXE)
+    find_program(CCache-Loc ${CCACHE_EXE})
+else()
+    find_program(CCache-Loc ccache)
+endif()
+
+if(${CMAKE_CXX_COMPILER_ID} MATCHES MSVC)
+	include(${CMAKE_CURRENT_LIST_DIR}/MSVCOptions.cmake)
+else()
+	include(${CMAKE_CURRENT_LIST_DIR}/GNUOptions.cmake)
+endif()
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPO_YES LANGUAGES CXX)

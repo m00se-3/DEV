@@ -2,20 +2,13 @@ add_executable(dev)
 
 if(Clang-Tidy-Loc)
     message("Clang Tidy found! Enabling...\n")
-    set_property(TARGET dev PROPERTY CXX_CLANG_TIDY ${Clang-Tidy-Loc})
-elseif(CPP-Check-Loc)
+    set_target_properties(dev PROPERTIES CXX_CLANG_TIDY "${Clang-Tidy-Loc}")
+endif()
+
+if(CPP-Check-Loc)
     message("CPPCheck found! Enabling...\n")
-    set_property(TARGET dev PROPERTY CXX_CPPCHECK ${CPP-Check-Loc})
+    set_target_properties(dev PROPERTIES CXX_CPPCHECK "${CPP-Check-Loc} --project=${CMAKE_CURRENT_LIST_DIR}/../compile_commands.json")
 endif()
-
-if(${CMAKE_CXX_COMPILER_ID} MATCHES MSVC)
-	include("../cmake/MSVCOptions.cmake")
-else()
-	include("../cmake/GNUOptions.cmake")
-endif()
-
-include(CheckIPOSupported)
-check_ipo_supported(RESULT IPO_YES LANGUAGES CXX)
 
 if(IPO_YES)
 	set_target_properties(dev PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)

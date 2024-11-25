@@ -2,18 +2,15 @@ cmake_minimum_required(VERSION 3.28)
 
 project(DataEditorViewer LANGUAGES CXX)
 
+include(CTest)
 include(CPM.cmake)
-
-# Search for ccache, clang-tidy
-
-find_program(Clang-Tidy-Loc clang-tidy)
-find_program(CPP-Check-Loc cppcheck)
-find_program(CCache-Loc ccache)
+include(cmake/Config.cmake)
 
 if(CCache-Loc)
     message("ccache found! Enabling...\n")
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCache-Loc})
     set(CPM_SOURCE_CACHE ${CMAKE_CURRENT_LIST_DIR}/.cache/CPM)
+    file(WRITE ${CPM_SOURCE_CACHE}/.clang-tidy "Checks: '-*'")
 endif()
 
 # Install dependencies
@@ -36,6 +33,9 @@ cpmaddpackage(
     "SFML_DIR ${CPM_PACKAGE_SFML_BINARY_DIR}"
     "SFML_STATIC_LIBRARIES ON"
 )
+
 cpmaddpackage("gh:gsl-lite/gsl-lite@0.41.0")
+cpmaddpackage("gh:doctest/doctest@2.4.11")
 
 add_subdirectory("DEV")
+add_subdirectory("tests")

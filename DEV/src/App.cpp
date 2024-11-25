@@ -11,8 +11,6 @@ struct StateCreator : T... { using T::operator()...; };
 namespace dev {
 
     App::App()
-    : _window(sf::VideoMode({640u, 480u}), "Data Editor-Viewer"),
-      _currentState(std::monostate{}), _nextState(MainMenu{})
     {
         const std::filesystem::path themes = TGUI_THEMES;
         
