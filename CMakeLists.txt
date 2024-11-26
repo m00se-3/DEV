@@ -13,6 +13,8 @@ if(CCache-Loc)
     file(WRITE ${CPM_SOURCE_CACHE}/.clang-tidy "Checks: '-*'")
 endif()
 
+set(DEV_Compile_Database ${CMAKE_CURRENT_LIST_DIR}/compil_commands.json)
+
 # Install dependencies
 
 cpmaddpackage(

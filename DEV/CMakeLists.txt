@@ -5,9 +5,11 @@ if(Clang-Tidy-Loc)
     set_target_properties(dev PROPERTIES CXX_CLANG_TIDY "${Clang-Tidy-Loc}")
 endif()
 
-if(CPP-Check-Loc)
+# If the user doesn't have cppcheck installed, but also has mingw installed, this could trigger a false positive.
+# The USE_CPPCHECK variable is intended to prevent this.
+if(CPP-Check-Loc AND USE_CPPCHECK)
     message("CPPCheck found! Enabling...\n")
-    set_target_properties(dev PROPERTIES CXX_CPPCHECK "${CPP-Check-Loc} --project=${CMAKE_CURRENT_LIST_DIR}/../compile_commands.json")
+    set_target_properties(dev PROPERTIES CXX_CPPCHECK "${CPP-Check-Loc} --project=${DEV_Compile_Database}")
 endif()
 
 if(IPO_YES)
@@ -40,6 +42,7 @@ target_sources(
 	${CMAKE_CURRENT_LIST_DIR}/src/App.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/MainMenu.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/Json.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/internal/EventRecorder.cpp
 
 	PUBLIC 
 
@@ -53,5 +56,6 @@ target_sources(
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Forms.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/MainMenu.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Json.hpp
+	${CMAKE_CURRENT_LIST_DIR}/inc/internal/EventRecorder.hpp
 
 )

@@ -5,17 +5,19 @@
 #include <SFML/System/Time.hpp>
 
 #include <deque>
+#include <filesystem>
 
-namespace dev
-{
+namespace dev {
     /**
      * @brief A class for recording and playing back SFML events. This is intended for internal testing.
      * 
      */
-    class EventRecorder
-    {
+    class EventRecorder {
     public:
         using EventTypes = std::variant<std::monostate, sf::Event, sf::Time>;
+
+        EventRecorder() = default;
+        EventRecorder(const std::filesystem::path& eventFile);
 
         /**
          * @brief Place event at the back of the queue.
@@ -29,14 +31,15 @@ namespace dev
          * 
          * @return constexpr std::optional<EventTypes> 
          */
-        [[nodiscard]] constexpr std::optional<EventTypes> GetNextEvent()
-        {
+        [[nodiscard]] constexpr std::optional<EventTypes> GetNextEvent() {
             if(_events.empty()) { return std::nullopt; }
-
-            auto e = _events.front();
-            _events.pop_front();
-            return e;
+            return _events.front();
         }
+
+        constexpr void PopEvent() { _events.pop_front(); }
+        constexpr bool IsEmpty() { return _events.empty(); }
+
+        void DumpToFile();
 
     private:
         std::deque<EventTypes> _events;        

@@ -1,7 +1,6 @@
 #include <dev/App.hpp>
 
-int main()
-{
+int main() {
    dev::App app;
 
    app.Run();

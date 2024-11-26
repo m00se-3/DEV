@@ -4,10 +4,8 @@
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
-namespace dev
-{
-    struct Json
-    {
+namespace dev {
+    struct Json {
         void operator()(tgui::Gui& gui);
     };
 }
