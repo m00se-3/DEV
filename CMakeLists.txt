@@ -10,10 +10,11 @@ if(CCache-Loc)
     message("ccache found! Enabling...\n")
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCache-Loc})
     set(CPM_SOURCE_CACHE ${CMAKE_CURRENT_LIST_DIR}/.cache/CPM)
-    file(WRITE ${CPM_SOURCE_CACHE}/.clang-tidy "Checks: '-*'")
+    file(WRITE ${CPM_SOURCE_CACHE}/.clang-tidy "Checks: -*")
 endif()
 
 set(DEV_Compile_Database ${CMAKE_CURRENT_LIST_DIR}/compil_commands.json)
+set(DEV_Root_Dir ${CMAKE_CURRENT_LIST_DIR})
 
 # Install dependencies
 
@@ -36,7 +37,7 @@ cpmaddpackage(
     "SFML_STATIC_LIBRARIES ON"
 )
 
-cpmaddpackage("gh:gsl-lite/gsl-lite@0.41.0")
+cpmaddpackage("gh:nlohmann/json@3.11.3")
 cpmaddpackage("gh:doctest/doctest@2.4.11")
 
 add_subdirectory("DEV")

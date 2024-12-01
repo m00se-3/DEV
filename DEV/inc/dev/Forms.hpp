@@ -3,5 +3,6 @@
 
 #include <dev/MainMenu.hpp>
 #include <dev/Json.hpp>
+#include <dev/DevMenuBar.hpp>
 
 #endif

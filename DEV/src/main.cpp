@@ -2,6 +2,5 @@
 
 int main() {
    dev::App app;
-
-   app.Run();
+   app.Run(dev::Json{});
 }

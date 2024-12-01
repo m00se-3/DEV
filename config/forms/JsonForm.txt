@@ -1,0 +1,32 @@
+Label.Hello {
+    AutoSize = true;
+    Size = (87, 17);
+    Text = "This worked!";
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (0, 0, 0, 0);
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}

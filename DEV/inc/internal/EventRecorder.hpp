@@ -24,7 +24,9 @@ namespace dev {
          * 
          * @param event 
          */
-        constexpr void AddEvent(const EventTypes& event) { _events.emplace_back(event); }
+        constexpr void AddEvent(const EventTypes& event) {
+            _events.emplace_back(event);
+        }
 
         /**
          * @brief Return the next event from the queue. Events are returned in a first in first out order.
@@ -37,12 +39,14 @@ namespace dev {
         }
 
         constexpr void PopEvent() { _events.pop_front(); }
-        constexpr bool IsEmpty() { return _events.empty(); }
+        constexpr void AccumulateTime(sf::Time time) { _timeBetweenEvents += time; }
+        [[nodiscard]] constexpr bool IsEmpty() { return _events.empty(); }
 
         void DumpToFile();
 
     private:
-        std::deque<EventTypes> _events;        
+        std::deque<EventTypes> _events;
+        sf::Time _timeBetweenEvents;
     };
 }
 

@@ -1,4 +1,5 @@
 #include <dev/App.hpp>
+#include <TGUI/Layout.hpp>
 #include <TGUI/Loading/Theme.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Time.hpp>
@@ -10,21 +11,36 @@ template<typename... T>
 struct StateCreator : T... { using T::operator()...; };
 
 namespace dev {
+    static constexpr auto devFontSize = 16u;
+    static constexpr uint8_t devBGColorValue = 64u;
 
     void App::Run(const GuiState& initialState) {
-        tgui::Theme::setDefault( (_themes / "Black.txt").string());
         _nextState = initialState;
+        Run();
+    }
+
+    void App::Run() {        
+        tgui::Theme::setDefault( (_themes / "Black.txt").string());
         _gui.setWindow(_window);
-        sf::Clock timer{};
+        _gui.setTextSize(devFontSize);
+
+        _gui.add(_menuBar.Build(&_window));
+        _menuBar.SetFileIsOpen(false);
+
+        _dataFileControls.Create(tgui::Layout2d{ "100%", "80%" });
+        _dataFileControls.SetVisible(false);
+        _gui.add(_dataFileControls.Get());
+
+        sf::Clock eventClock{};
 
         if(_recorder && _playbackEvents) {
             while (_window.isOpen()) {
-                PollEventsFromRecorder(timer);
+                PollEventsFromRecorder(eventClock);
                 UpdateAppState();
             }
         } else {
             while (_window.isOpen()) {
-                PollEventsFromWindow(timer);
+                PollEventsFromWindow(eventClock);
                 UpdateAppState();
             }
 
@@ -54,15 +70,20 @@ namespace dev {
         }
     }
 
-    void App::PollEventsFromWindow([[maybe_unused]] sf::Clock& clock) {
+    void App::PollEventsFromWindow(sf::Clock& clock) {
+        bool noEvents = true;
         while (const auto event = _window.pollEvent()) {     
+            noEvents = false;  
             _gui.handleEvent(*event);
+            
+            if(IsRecording()) { _recorder->AddEvent(*event); }
             
             if (event->is<sf::Event::Closed>()) {
                 _window.close();
             }
-
         }
+
+        if(noEvents && IsRecording()) { _recorder->AccumulateTime(clock.restart()); }
     }
 
     void App::UpdateAppState() {
@@ -70,20 +91,20 @@ namespace dev {
         if(_currentState.index() != _nextState.index()) {
             _currentState = _nextState;
 
-            _gui.removeAllWidgets();
-
             std::visit(
                 StateCreator{
-                    [](std::monostate) {},
-                    [&](auto&& state){ state(_gui); }
+                    [&](std::monostate) { _dataFileControls.SetVisible(false); },
+                    [&](Json& state){
+                        _dataFileControls.SetVisible(true);
+                        state(_dataFileControls,
+                        std::filesystem::path{DEV_FORMS_DIR} / "JsonForm.txt");
+                    }
                 },
                 _currentState
             );
         }
 
-        constexpr uint8_t def_bg_color_value = 64u;
-
-        _window.clear(sf::Color{ def_bg_color_value, def_bg_color_value, def_bg_color_value});
+        _window.clear(sf::Color{ devBGColorValue, devBGColorValue, devBGColorValue});
         _gui.draw();
         _window.display();
     }
