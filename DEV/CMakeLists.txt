@@ -48,7 +48,7 @@ target_sources(
 	${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/App.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/MainMenu.cpp
-	${CMAKE_CURRENT_LIST_DIR}/src/Json.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/Editor.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/DevMenuBar.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/Query.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/internal/EventRecorder.cpp
@@ -64,7 +64,7 @@ target_sources(
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/App.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Forms.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/MainMenu.hpp
-	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Json.hpp
+	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Editor.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/GuiPanel.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/DevMenuBar.hpp
 	${CMAKE_CURRENT_LIST_DIR}/inc/dev/Query.hpp

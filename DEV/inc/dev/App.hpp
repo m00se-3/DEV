@@ -2,7 +2,9 @@
 #define DEV_APP_H
 
 #include <internal/EventRecorder.hpp>
-#include <dev/Forms.hpp>
+#include <dev/MainMenu.hpp>
+#include <dev/DevMenuBar.hpp>
+#include <dev/Editor.hpp>
 #include <dev/GuiPanel.hpp>
 #include <TGUI/Widgets/Group.hpp>
 #include <TGUI/Widgets/Panel.hpp>
@@ -14,7 +16,7 @@ namespace dev {
     public:
         using GuiState = std::variant<
                             std::monostate,
-                            Json>;
+                            Editor>;
 
         App() = default;
         App(EventRecorder* recorder, bool playback = false) : _recorder(recorder), _playbackEvents(playback) {}

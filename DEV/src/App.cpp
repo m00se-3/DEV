@@ -94,10 +94,8 @@ namespace dev {
             std::visit(
                 StateCreator{
                     [&](std::monostate) { _dataFileControls.SetVisible(false); },
-                    [&](Json& state){
+                    [&](Editor&){
                         _dataFileControls.SetVisible(true);
-                        state(_dataFileControls,
-                        std::filesystem::path{DEV_FORMS_DIR} / "JsonForm.txt");
                     }
                 },
                 _currentState
